@@ -3,7 +3,7 @@ import random
 
 import pygame
 
-
+#for both duck and frog
 class Forjobday:
     def __init__(self, size, remove_frog, add_face, duck, face, messages, add_messages):
         self.remove_frog = remove_frog
