@@ -33,6 +33,10 @@ def generate_app(size, add_face, self=None):
     return size
     return add
 
+self.duck_color (252,232,131)
+self.frog (147,197,114)
+
+
 
 def messages(self, add_messages):
     return self
