@@ -1,1 +1,4 @@
+import pygame
+import math
+
 #frog class
