@@ -1,8 +1,10 @@
-import math
+import os
 import random
-
+import math
 import pygame
 
+
+# download pygame package
 # for both duck and frog, board
 class Forjobday:
     def __init__(self, size, remove_frog, add_face, duck, face, messages, add_messages):
