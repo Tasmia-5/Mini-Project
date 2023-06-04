@@ -51,13 +51,10 @@ def main(screen):
 
 def generate_app(size, add_face, self=None):
     self.size = size
-    return add_face
-    return size
-    return add
+    return add_face, size, add
 
-self.duck_color (252,232,131)
-self.frog (147,197,114)
-
+self.duck_color(252, 232, 131)
+self.frog(147, 197, 114)
 
 
 def messages(self, add_messages):
@@ -65,28 +62,32 @@ def messages(self, add_messages):
     return add_messages
     self.add_messages
 
-def main(self):
-pygame.font.Font(None, screen)
-screen.size = size
-return size 
 
-def generate_app(size, screen, None)
+def main(self):
+    pygame.font.Font(None, screen)
+    screen.size = size
+    return size
+
+
+def generate_app(size, screen):
     return size
     return screen
-    pass()
+    pass
 
-def add_face(self)
-    return self
-    pass()
 
-def remove_frog(self)
+def add_face(self):
     return self
-    pass ()
+    pass
 
-def add_messages(self)
-    return.self
+
+def remove_frog(self):
     return self
-    pass()
+    pass
+
+
+def add_messages(self):
+    return self
+    pass
 
             
 
