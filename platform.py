@@ -1,10 +1,7 @@
 import os
 import sys
 import random
-<<<<<<< HEAD:import math.py
-=======
 import math
->>>>>>> 3986f09c5e40126cc92b0535d7d3e054ed003a40:platform.py
 import pygame
 from frog import *
 from duck import *
