@@ -1,7 +1,25 @@
 import os
+import sys
 import random
 import math
 import pygame
+from frog import *
+from duck import *
+from os import listdir
+from os.path import isfile, join
+
+pygame.init()
+
+WIDTH = 1100
+HEIGHT = 500
+FPS = 60
+PLAYER_VEL = 5
+
+
+def main():
+    game = True
+    menu = True
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 
 # download pygame package
@@ -25,6 +43,7 @@ def main(screen):
     screen.fill()
 
     pygame.font.Font(None, 100)
+    # lilac message, black font
 
 
 def generate_app(size, add_face, self=None):
