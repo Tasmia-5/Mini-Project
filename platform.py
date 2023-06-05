@@ -10,7 +10,7 @@ from os.path import isfile, join
 
 pygame.init()
 
-WIDTH = 1100
+WIDTH = 1000
 HEIGHT = 500
 FPS = 60
 PLAYER_VEL = 5
@@ -20,6 +20,8 @@ def main():
     game = True
     menu = True
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
+    play = Button(1000/2 - 15, 250, "[ START ]", screen)
 
 
 # download pygame package
