@@ -21,7 +21,7 @@ def main():
     menu = True
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
-    play = Button(1000/2 - 15, 250, "[ START ]", screen)
+    play = Button(1000 / 2 - 15, 250, "[ START ]", screen)
 
 
 # download pygame package
@@ -46,7 +46,7 @@ def main(screen):
     screen.fill_color_BLUE
     screen.fill_
 
-    BLUE_Screen (67.8,84.7,90.2)
+    BLUE_Screen(67.8, 84.7, 90.2)
     pygame.font.Font(None, 100)
     # lilac message, black font
 
@@ -54,6 +54,7 @@ def main(screen):
 def generate_app(size, add_face, self=None):
     self.size = size
     return add_face, size, add
+
 
 self.duck_color(252, 232, 131)
 self.frog(147, 197, 114)
@@ -90,20 +91,6 @@ def remove_frog(self):
 def add_messages(self):
     return self
     pass
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == '__main__':
