@@ -1,24 +1,31 @@
-import os
-import sys
+import pygame
 import random
 import math
-import pygame
-from frog import *
-from duck import *
+import sys
+import os
 from os import listdir
 from os.path import isfile, join
+from frog import *
+from duck import *
 
-pygame.init()
-
+"""
 WIDTH = 1000
 HEIGHT = 500
 FPS = 60
 PLAYER_VEL = 5
+"""
+
+pygame.init()
+# test files for now but will be for buttons
+pygame.display.set_caption("Platformer")
+WIDTH, HEIGHT = 1000, 500           # for menu
 
 
 def main():
+    # menu board setup that leads to game after clicking on character
     game = True
     menu = True
+
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
     play = Button(1000 / 2 - 15, 250, "[ START ]", screen)
