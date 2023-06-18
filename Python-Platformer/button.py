@@ -4,6 +4,7 @@ import math
 import pygame
 from os import listdir
 from os.path import isfile, join
+
 pygame.init()
 # the test file for now but will be for buttons
 pygame.display.set_caption("Platformer")
@@ -322,3 +323,7 @@ def main(window):
 
 if __name__ == "__main__":
     main(window)
+
+# https://www.youtube.com/watch?v=N6xqCwblyiw
+# https://www.youtube.com/watch?v=B6DrRN5z_uU (current one)
+# https://www.youtube.com/watch?v=MYaxPa_eZS0 (sprite tutorial)
