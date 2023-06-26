@@ -20,8 +20,14 @@ window = pygame.display.set_mode((WIDTH, HEIGHT))
 def draw_start_menu(screen):
     # menu/buttons
     # baby blue hex = #89CFF0, RGB = (137, 207, 240)
+    # lighter baby blue hex = #A5DCF0, RGB = (165, 220, 240)
+    # very dark blue RGB = (68, 85, 90)
     BLUE = pygame.Color("#89CFF0")
     screen.fill(BLUE)
+    self.duck_color(252, 232, 131)
+    self.frog(147, 197, 114)
+    pygame.font.Font(None, 100)
+    # lilac message, black font
 
     # draw the title and directions
     title_font = pygame.font.Font()

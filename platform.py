@@ -24,6 +24,12 @@ PLAYER_VEL = 5
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 
 
+def get_background(name):
+    image = pygame.image.load(join("resources", "Background", name))
+    _, _, width, height = image.get_rect()
+    tiles = []
+
+
 def main(window):
     # the game itself
     clock = pygame.time.Clock()
@@ -39,7 +45,7 @@ def main(window):
 
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
-    play = Button(1000 / 2 - 15, 250, "[ START ]", screen)
+    # play = Button(1000 / 2 - 15, 250, "[ START ]", screen)
 
 
 # download pygame package
@@ -59,35 +65,16 @@ class Forjobday:
             return add_face
 
 
-def main(screen):
-    screen.fill()
-    screen.fill_color_BLUE
-    screen.fill_
-
-    BLUE_Screen(67.8, 84.7, 90.2)
-    pygame.font.Font(None, 100)
-    # lilac message, black font
-
-
 def generate_app(size, add_face, self=None):
     self.size = size
-    return add_face, size, add
-
-
-self.duck_color(252, 232, 131)
-self.frog(147, 197, 114)
+    pass
 
 
 def messages(self, add_messages):
     return self
     return add_messages
     self.add_messages
-
-
-def main(self):
-    pygame.font.Font(None, screen)
-    screen.size = size
-    return size
+    pass
 
 
 def generate_app(size, screen):
