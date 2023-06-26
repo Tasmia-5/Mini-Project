@@ -7,6 +7,7 @@ from os.path import isfile, join
 
 pygame.init()
 # the test file for now but will be for buttons
+# using 'Characters' folder
 pygame.display.set_caption("Platformer")
 
 WIDTH, HEIGHT = 1000, 500
@@ -14,6 +15,16 @@ FPS = 60
 PLAYER_VEL = 5
 
 window = pygame.display.set_mode((WIDTH, HEIGHT))
+
+
+def draw_start_menu(screen):
+    # menu/buttons
+    # baby blue hex = #89CFF0, RGB = (137, 207, 240)
+    BLUE = pygame.Color("#89CFF0")
+    screen.fill(BLUE)
+
+    # draw the title and directions
+    title_font = pygame.font.Font()
 
 
 def flip(sprites):
@@ -57,7 +68,7 @@ def get_block(size):
 class Player(pygame.sprite.Sprite):
     COLOR = (255, 0, 0)
     GRAVITY = 1
-    SPRITES = load_sprite_sheets("MainCharacters", "Frog", 32, 32, True)
+    SPRITES = load_sprite_sheets("Characters", "Frog", 32, 32, True)
     ANIMATION_DELAY = 3
 
     def __init__(self, x, y, width, height):

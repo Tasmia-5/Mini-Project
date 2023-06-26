@@ -14,17 +14,28 @@ HEIGHT = 500
 FPS = 60
 PLAYER_VEL = 5
 """
+# test files for now but will be for the game
 
 pygame.init()
-# test files for now but will be for buttons
 pygame.display.set_caption("Platformer")
-WIDTH, HEIGHT = 1000, 500           # for menu
+WIDTH, HEIGHT = 1000, 500
+FPS = 60
+PLAYER_VEL = 5
+window = pygame.display.set_mode((WIDTH, HEIGHT))
 
 
-def main():
-    # menu board setup that leads to game after clicking on character
+def main(window):
+    # the game itself
+    clock = pygame.time.Clock()
     game = True
-    menu = True
+    while run:
+        clock.tick.Clock(FPS)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game = False
+                break
+    pygame.quit()
+    quit()
 
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
