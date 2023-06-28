@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f7dca98-af18-43c5-b851-e3df8b8dd785" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/platform.py" beforeDir="false" afterPath="$PROJECT_DIR$/platform.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +47,9 @@
       <module name="Mini-Project" />
       <option name="INTERPRETER_OPTIONS" value="/usr/local/bin/python3" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -82,6 +85,9 @@
       <workItem from="1687892359714" duration="505000" />
       <workItem from="1687892949049" duration="928000" />
       <workItem from="1687894235136" duration="31000" />
+      <workItem from="1687921272041" duration="87000" />
+      <workItem from="1687921362371" duration="7000" />
+      <workItem from="1687921374207" duration="21000" />
     </task>
     <servers />
   </component>
