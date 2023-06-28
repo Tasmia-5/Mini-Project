@@ -1,5 +1,4 @@
-level_map = [
-'    XXXX  XXXXXX  XX XXXX  ',
-'XXXXXXXX  XXXXXX  XX XXXXX ']
-
-tile_size = 50
+vertical_tile_num = 11
+tile_size = 96
+height = vertical_tile_num * tile_size
+width = 1000

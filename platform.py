@@ -108,20 +108,20 @@ def get_block(size):
     path = join("assets", "Terrain", "Terrain.png")
     image = pygame.image.load(path).convert_alpha()
     surface = pygame.Surface((size, size), pygame.SRCALPHA, 32)
-    rect = pygame.Rect(96, 0, size, size)
+    rect = pygame.Rect(96, 128, size, size)
     surface.blit(image, (0, 0), rect)
     return pygame.transform.scale2x(surface)
 
 
 class Player(pygame.sprite.Sprite):
-    COLOR = (255, 0, 0)
     GRAVITY = 1
-    SPRITES = load_sprite_sheets("Characters", "Frog", 32, 32, True)
+    SPRITES = load_sprite_sheets("Characters", "Duck", 32, 32, True)
     ANIMATION_DELAY = 3
 
     def __init__(self, x, y, width, height):
         # vel(s) = how fast player goes
         super().__init__()
+        self.sprite = None
         self.rect = pygame.Rect(x, y, width, height)
         self.x_vel = 0
         self.y_vel = 0
@@ -236,6 +236,7 @@ class Fire(Object):
     ANIMATION_DELAY = 3
 
     def __init__(self, x, y, width, height):
+        # fire
         super().__init__(x, y, width, height, "fire")
         self.fire = load_sprite_sheets("Traps", "Fire", width, height)
         self.image = self.fire["off"][0]
@@ -343,17 +344,21 @@ def main(window):
     background, bg_image = get_background("Blue.png")
 
     block_size = 96
-
-    player = Player(100, 100, 50, 50)
-    fire = Fire(100, HEIGHT - block_size - 64, 16, 32)
+    # Player(x axis posit...)
+    # (...- block_size - "height", range of animation/sprite, bottom of object range)
+    # Fire(x axis position,...)
+    player = Player(20, 50, 50, 50)
+    fire = Fire(200, HEIGHT - block_size - 64, 16, 32)
     fire.on()
     floor = [Block(i * block_size, HEIGHT - block_size, block_size)
-             for i in range(-WIDTH // block_size, (WIDTH * 2) // block_size)]
+             for i in range(-WIDTH*2 // block_size, (WIDTH * 4) // block_size)]
+
     objects = [*floor, Block(0, HEIGHT - block_size * 2, block_size),
                Block(block_size * 3, HEIGHT - block_size * 4, block_size), fire]
 
     offset_x = 0
-    scroll_area_width = 200
+    # how far off to side you go
+    scroll_area_width = 300
 
     run = True
     while run:

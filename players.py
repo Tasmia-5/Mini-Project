@@ -1,16 +1,16 @@
 import pygame
-import sys
+from support import import_folder
 # characters class
 
 
 class Player(pygame.sprite.Sprite):
-    COLOR = (255, 0, 0)
     GRAVITY = 1
     SPRITES = load_sprite_sheets("Characters", "Frog", 32, 32, True)
     ANIMATION_DELAY = 3
 
-    def __init__(self, x, y, width, height):
+    def __init__(self, x, y, create_jump_particles, change_health):
         super().__init__()
+        self.impo
         self.rect = pygame.Rect(x, y, width, height)
         self.x_vel = 0
         self.y_vel = 0
