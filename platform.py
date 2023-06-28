@@ -113,7 +113,6 @@ def get_block(size):
 
 
 class Player(pygame.sprite.Sprite):
-    COLOR = (255, 0, 0)
     GRAVITY = 1
     SPRITES = load_sprite_sheets("Characters", "Duck", 32, 32, True)
     ANIMATION_DELAY = 3
