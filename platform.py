@@ -348,7 +348,7 @@ def main(window):
     # (...- block_size - "height", range of animation/sprite, bottom of object range)
     # Fire(x axis position,...)
     player = Player(20, 50, 50, 50)
-    fire = Fire(200, HEIGHT - block_size - 64, 16, 32)
+    fire = Fire(600, HEIGHT - block_size - 64, 16, 32)
     fire.on()
     floor = [Block(i * block_size, HEIGHT - block_size, block_size)
              for i in range(-WIDTH*2 // block_size, (WIDTH * 4) // block_size)]
