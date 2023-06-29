@@ -369,9 +369,11 @@ def main(window):
                Block(block_size * 6, HEIGHT - block_size * 2, block_size),
                Block(block_size * 10, HEIGHT - block_size * 2, block_size),
                Block(block_size * 11, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 19, HEIGHT - block_size * 3, block_size),
                Block(block_size * 20, HEIGHT - block_size * 3, block_size),
                Block(block_size * 21, HEIGHT - block_size * 3, block_size),
                Block(block_size * 22, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 23, HEIGHT - block_size * 3, block_size),
                Block(block_size * 39, HEIGHT - block_size * 2, block_size),
                Block(block_size * 40, HEIGHT - block_size * 1, block_size),
                Block(block_size * 40, HEIGHT - block_size * 2, block_size),
@@ -392,6 +394,10 @@ def main(window):
     # how far off to side you go
     scroll_area_width = 400
 
+    goofy_pic1 = pygame.image.load("assets/goofy_pic1.png")
+    player_colliding = False
+    message_window = pygame.display.set_mode((WIDTH, HEIGHT))
+
     run = True
     while run:
         clock.tick(FPS)
@@ -404,6 +410,22 @@ def main(window):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE and player.jump_count < 2:
                     player.jump()
+
+        # Check for collision between player and fire
+        if player.rect.colliderect(fire.rect):
+            # Show the message and set the flag to True
+            if not player_colliding:
+                player_colliding = True
+                # Show the message when collision occurs
+                message_window.blit(goofy_pic1, (0, 0))
+                pygame.display.update()
+        else:
+            # Set the flag to False if not colliding
+            player_colliding = False
+
+        if player_colliding:
+            message_window.blit(goofy_pic1, (0, 0))
+            pygame.display.update()
 
         player.loop(FPS)
         fire.loop()
