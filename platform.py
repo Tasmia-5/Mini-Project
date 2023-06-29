@@ -349,30 +349,39 @@ def main(window):
     # (...- block_size - "height", range of animation/sprite, bottom of object range)
     # Fire(x axis position,...)
     player = Player(110, HEIGHT - 50, 50, 50)
-    fire = Fire(800, HEIGHT - block_size - 64, 16, 32)
+    fire = Fire(800, HEIGHT - block_size - 64, 15, 32)
     fire.on()
     floor = [Block(i * block_size, HEIGHT - block_size, block_size)
              for i in range(-WIDTH*2 // block_size, (WIDTH * 4) // block_size)]
 
     objects = [*floor, Block(0, HEIGHT - block_size * 2, block_size),
+               Block(block_size * -10, HEIGHT - block_size * 2, block_size),
+               Block(block_size * -10, HEIGHT - block_size * 3, block_size),
+               Block(block_size * -10, HEIGHT - block_size * 4, block_size),
+               Block(block_size * -10, HEIGHT - block_size * 5, block_size),
+               Block(block_size * -10, HEIGHT - block_size * 6, block_size),
                Block(block_size * 4, HEIGHT - block_size * 2, block_size),
                Block(block_size * 5, HEIGHT - block_size * 3, block_size),
                Block(block_size * 5, HEIGHT - block_size * 2, block_size),
-               Block(block_size * -15, HEIGHT - block_size * 2, block_size),
-               Block(block_size * -15, HEIGHT - block_size * 3, block_size),
-               Block(block_size * 8, HEIGHT - block_size * 3, block_size),
                Block(block_size * 9, HEIGHT - block_size * 2, block_size),
                Block(block_size * 10, HEIGHT - block_size * 2, block_size),
-               Block(block_size * 15, HEIGHT - block_size * 2, block_size),
-               Block(block_size * 15, HEIGHT - block_size * 3, block_size),
-               Block(block_size * 16, HEIGHT - block_size * 2, block_size),
-               Block(block_size * 41, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 20, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 21, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 22, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 39, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 40, HEIGHT - block_size * 1, block_size),
+               Block(block_size * 40, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 40, HEIGHT - block_size * 3, block_size),
                Block(block_size * 41, HEIGHT - block_size * 1, block_size),
-               Block(block_size * 42, HEIGHT - block_size * 3, block_size),
-               Block(block_size * 43, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 41, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 41, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 41, HEIGHT - block_size * 4, block_size),
+               Block(block_size * 41, HEIGHT - block_size * 5, block_size),
+               Block(block_size * 41, HEIGHT - block_size * 6, block_size),
                fire,
-               Fire(1380, HEIGHT - block_size - 64, 16, 32),
-               Fire(1950, HEIGHT - block_size - 64, 16, 32),
+               Fire(-830, HEIGHT - block_size - 64, 15, 32),
+               Fire(2050, HEIGHT - block_size * 3 - 64, 15, 32),
+               Fire(3775, HEIGHT - block_size * 2 - 64, 15, 32),
                ]
 
     offset_x = 0
