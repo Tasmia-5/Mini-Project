@@ -1,13 +1,8 @@
-import math
-import sys
-
-import pygame.sprite
+import pygame
+from pygame.mixer import*
 
 
-class Duck(pygame.sprite.Sprite):
-    COLOR = (255, 0, 0)
-    GRAVITY = 1
-    SPRITES = load_sprite_sheets("MainCharacters", "PinkMan", 32, 32, True)
-    ANIMATION_DELAY = 3
-    print("quack")
-    
+pygame.init()
+pygame.mixer.init()
+pygame.mixer.music.load("sound", "FiftyFifty_Cupid.mp3")
+music.play()

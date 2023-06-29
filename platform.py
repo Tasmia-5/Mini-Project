@@ -6,8 +6,9 @@ import sys
 import os
 from os import listdir
 from os.path import isfile, join
-#from frog import *
-#from duck import *
+from pygame.mixer import*
+# from frog import *
+# from duck import *
 
 """
 WIDTH = 1000
@@ -368,7 +369,7 @@ def main(window):
                Block(block_size * 41, HEIGHT - block_size * 2, block_size),
                Block(block_size * 41, HEIGHT - block_size * 1, block_size),
                Block(block_size * 42, HEIGHT - block_size * 3, block_size),
-               Block(block_size * 43, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 43, HEIGHT - block_size * 3, block_size),
                fire,
                Fire(1380, HEIGHT - block_size - 64, 16, 32),
                Fire(1950, HEIGHT - block_size - 64, 16, 32),
