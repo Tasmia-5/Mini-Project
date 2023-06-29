@@ -239,7 +239,7 @@ class Fire(Object):
         # fire
         super().__init__(x, y, width, height, "fire")
         self.fire = load_sprite_sheets("Traps", "Fire", width, height)
-        self.image = self.fire["off"][0]
+        self.image = self.fire["on"][0]
         self.mask = pygame.mask.from_surface(self.image)
         self.animation_count = 0
         self.animation_name = "off"
@@ -347,14 +347,32 @@ def main(window):
     # Player(x axis posit...)
     # (...- block_size - "height", range of animation/sprite, bottom of object range)
     # Fire(x axis position,...)
-    player = Player(20, 50, 50, 50)
-    fire = Fire(600, HEIGHT - block_size - 64, 16, 32)
+    player = Player(110, HEIGHT - 50, 50, 50)
+    fire = Fire(800, HEIGHT - block_size - 64, 16, 32)
     fire.on()
     floor = [Block(i * block_size, HEIGHT - block_size, block_size)
              for i in range(-WIDTH*2 // block_size, (WIDTH * 4) // block_size)]
 
     objects = [*floor, Block(0, HEIGHT - block_size * 2, block_size),
-               Block(block_size * 3, HEIGHT - block_size * 4, block_size), fire]
+               Block(block_size * 4, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 5, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 5, HEIGHT - block_size * 2, block_size),
+               Block(block_size * -15, HEIGHT - block_size * 2, block_size),
+               Block(block_size * -15, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 8, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 9, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 10, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 15, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 15, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 16, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 41, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 41, HEIGHT - block_size * 1, block_size),
+               Block(block_size * 42, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 43, HEIGHT - block_size * 2, block_size),
+               fire,
+               Fire(1380, HEIGHT - block_size - 64, 16, 32),
+               Fire(1950, HEIGHT - block_size - 64, 16, 32),
+               ]
 
     offset_x = 0
     # how far off to side you go
@@ -388,4 +406,3 @@ def main(window):
 
 if __name__ == "__main__":
     main(window)
-
