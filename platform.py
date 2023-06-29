@@ -106,6 +106,10 @@ def load_sprite_sheets(dir1, dir2, width, height, direction=False):
 
 
 def get_block(size):
+    pygame.init()
+    pygame.mixer.init()
+    pygame.mixer.music.load('sounds/FiftyFifty_Cupid.mp3')
+    music.play(-1)
     path = join("assets", "Terrain", "Terrain.png")
     image = pygame.image.load(path).convert_alpha()
     surface = pygame.Surface((size, size), pygame.SRCALPHA, 32)
@@ -348,23 +352,23 @@ def main(window):
     # Player(x axis posit...)
     # (...- block_size - "height", range of animation/sprite, bottom of object range)
     # Fire(x axis position,...)
-    player = Player(110, HEIGHT - 50, 50, 50)
+    player = Player(210, HEIGHT - 50, 50, 50)
     fire = Fire(800, HEIGHT - block_size - 64, 15, 32)
     fire.on()
     floor = [Block(i * block_size, HEIGHT - block_size, block_size)
              for i in range(-WIDTH*2 // block_size, (WIDTH * 4) // block_size)]
 
-    objects = [*floor, Block(0, HEIGHT - block_size * 2, block_size),
+    objects = [*floor,
                Block(block_size * -10, HEIGHT - block_size * 2, block_size),
                Block(block_size * -10, HEIGHT - block_size * 3, block_size),
                Block(block_size * -10, HEIGHT - block_size * 4, block_size),
                Block(block_size * -10, HEIGHT - block_size * 5, block_size),
                Block(block_size * -10, HEIGHT - block_size * 6, block_size),
-               Block(block_size * 4, HEIGHT - block_size * 2, block_size),
-               Block(block_size * 5, HEIGHT - block_size * 3, block_size),
                Block(block_size * 5, HEIGHT - block_size * 2, block_size),
-               Block(block_size * 9, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 6, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 6, HEIGHT - block_size * 2, block_size),
                Block(block_size * 10, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 11, HEIGHT - block_size * 2, block_size),
                Block(block_size * 20, HEIGHT - block_size * 3, block_size),
                Block(block_size * 21, HEIGHT - block_size * 3, block_size),
                Block(block_size * 22, HEIGHT - block_size * 3, block_size),
@@ -386,7 +390,7 @@ def main(window):
 
     offset_x = 0
     # how far off to side you go
-    scroll_area_width = 300
+    scroll_area_width = 400
 
     run = True
     while run:
