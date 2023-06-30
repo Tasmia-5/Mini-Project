@@ -1,95 +1,88 @@
 import pygame
+import sys
+from pygame.locals import QUIT
 
-# Initialize Pygame
+# Initialize pygame
 pygame.init()
 
-# Set up the display
-screen_width = 800
-screen_height = 600
-screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption("Game Menu")
+# Set the window dimensions
+WIDTH = 1000
+HEIGHT = 500
 
-# Colors
-WHITE = (255, 255, 255)
-LIGHT_BLUE = (135, 206, 250)
+# Create the game window
+window = pygame.display.set_mode((WIDTH, HEIGHT))
 
-# Fonts
-font = pygame.font.Font(None, 36)
+# Define fonts
+font = pygame.font.SysFont("arialblack", 40)
 
-# Button class
-class Button:
-    def __init__(self, x, y, width, height, text, color, hover_color, action):
-        self.rect = pygame.Rect(x, y, width, height)
-        self.text = text
-        self.color = color
-        self.hover_color = hover_color
-        self.action = action
+# Define colors
+TEXT_COL = (255, 255, 255)
+BUTTON_COL = (137, 207, 240)
+BUTTON_HOVER_COL = (165, 220, 240)
 
-    def draw(self, screen):
-        pygame.draw.rect(screen, self.color, self.rect)
-        text_surface = font.render(self.text, True, WHITE)
-        text_rect = text_surface.get_rect(center=self.rect.center)
-        screen.blit(text_surface, text_rect)
+# Define button dimensions
+BUTTON_WIDTH = 200
+BUTTON_HEIGHT = 50
+BUTTON_SPACING = 20
 
-    def handle_event(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.rect.collidepoint(event.pos):
-                self.action()
+# Define menu state
+menu_state = "main"
 
-# Game variables
-volume = 50
-pin = ""
+# Function to handle the main menu
+def main_menu():
+    while True:
+        # Clear the screen
+        window.fill((0, 0, 0))
 
-# Button actions
-def start_action():
-    print("Start")
+        # Draw the menu buttons and text
+        draw_menu_buttons()
 
-def volume_increase_action():
-    global volume
-    volume += 10
-    print("Volume Increased:", volume)
+        pygame.display.update()
 
-def volume_decrease_action():
-    global volume
-    volume -= 10
-    print("Volume Decreased:", volume)
+        # Event handling
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                # Check if a button is clicked
+                mouse_pos = pygame.mouse.get_pos()
+                if is_button_clicked(mouse_pos, 1):
+                    # Start the game
+                    game_loop()
 
-def unlock_action():
-    global pin
-    pin += "*"
-    print("Unlocking... PIN:", pin)
+# Function to draw the menu buttons and text
+def draw_menu_buttons():
+    button_font = pygame.font.Font(None, 50)
+    duck_text = button_font.render("DUCK", True, TEXT_COL)
+    frog_text = button_font.render("FROG", True, TEXT_COL)
 
-# Create buttons
-button_width = 200
-button_height = 50
-button_x = screen_width // 2 - button_width // 2
-
-start_button = Button(button_x, 200, button_width, button_height, "Start / Try Again", LIGHT_BLUE, WHITE, start_action)
-volume_increase_button = Button(button_x, 275, button_width, button_height, "Volume +", LIGHT_BLUE, WHITE, volume_increase_action)
-volume_decrease_button = Button(button_x, 350, button_width, button_height, "Volume -", LIGHT_BLUE, WHITE, volume_decrease_action)
-unlock_button = Button(button_x, 425, button_width, button_height, "Unlock", LIGHT_BLUE, WHITE, unlock_action)
-
-# Game loop
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        start_button.handle_event(event)
-        volume_increase_button.handle_event(event)
-        volume_decrease_button.handle_event(event)
-        unlock_button.handle_event(event)
-
-    # Clear the screen
-    screen.fill(WHITE)
+    # Calculate button positions
+    button_x = WIDTH // 2 - BUTTON_WIDTH // 2
+    duck_button_y = HEIGHT // 2 - BUTTON_HEIGHT // 2
+    frog_button_y = duck_button_y + BUTTON_HEIGHT + BUTTON_SPACING
 
     # Draw the buttons
-    start_button.draw(screen)
-    volume_increase_button.draw(screen)
-    volume_decrease_button.draw(screen)
-    unlock_button.draw(screen)
+    pygame.draw.rect(window, BUTTON_COL, (button_x, duck_button_y, BUTTON_WIDTH, BUTTON_HEIGHT))
+    pygame.draw.rect(window, BUTTON_COL, (button_x, frog_button_y, BUTTON_WIDTH, BUTTON_HEIGHT))
 
-    # Update the display
-    pygame.display.flip()
+    # Draw the text on buttons
+    duck_text_rect = duck_text.get_rect(center=(WIDTH // 2, duck_button_y + BUTTON_HEIGHT // 2))
+    frog_text_rect = frog_text.get_rect(center=(WIDTH // 2, frog_button_y + BUTTON_HEIGHT // 2))
+    window.blit(duck_text, duck_text_rect)
+    window.blit(frog_text, frog_text_rect)
 
-pygame.quit()
+# Function to check if a button is clicked
+def is_button_clicked(mouse_pos, button_number):
+    button_x = WIDTH // 2 - BUTTON_WIDTH // 2
+    button_y = HEIGHT // 2 - BUTTON_HEIGHT // 2 + (button_number - 1) * (BUTTON_HEIGHT + BUTTON_SPACING)
+    button_rect = pygame.Rect(button_x, button_y, BUTTON_WIDTH, BUTTON_HEIGHT)
+    return button_rect.collidepoint(mouse_pos)
+
+# Function to handle the game loop
+def game_loop():
+    # Your game logic goes here
+    pass
+
+# Start the game by calling the main menu
+main_menu()
