@@ -346,7 +346,7 @@ def handle_move(player, objects):
             if obj.rect.x == -830:
                 player.make_hit()
                 display_picture("assets/picture.png")
-            if obj.rect.x == 3775:
+            if obj.rect.x == 800:
                 player.make_hit()
                 display_message("guess what...\nHappy Birthday!\nBut there is more...\nFind the mystery chest!", clock)
 
@@ -372,21 +372,30 @@ def display_picture(image_path):
 
 def display_message(message, clock):
     pygame.init()
+    pygame.mixer.init()
+    # pygame.mixer.music.load('sounds/Fireworks_pewpew.mp3')
+    pygame.mixer.Channel(1).play(pygame.mixer.Sound('sounds/Happy_Bday.mp3'))
+    pygame.mixer.Channel(2).play(pygame.mixer.Sound('sounds/Fireworks_pewpew.mp3'))
+    music.play(0)
     # Create a new window to display the message
     message_window = pygame.display.set_mode((WIDTH, HEIGHT))
 
     # Set the window title
     pygame.display.set_caption("Special Message")
 
+    restart_button_rect = pygame.Rect(WIDTH // 3, HEIGHT - 75, 250, 60)
     # Render the message text
     # fonts: Nicotine.ttf , Jedisf3Dital.ttf, Alien Mushrooms.otf, Minecraft.ttf, YourStarTtf.ttf, nyetlaserital.otf
-    font = pygame.font.Font('Jedisf3Dital.ttf', 35)
+    font = pygame.font.Font('Jedisf3Dital.ttf', 32)
 
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if restart_button_rect.collidepoint(event.pos):
+                    return True
 
         message_window.fill((229, 182, 247))  # Fill the window with lilac color
 
@@ -396,7 +405,7 @@ def display_message(message, clock):
             text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT - 420))
             message_window.blit(text, text_rect)
 
-            text2 = font.render(": ! . . : . ! . ! : ! : . Happy Birthday . : ! : ! . ! . : . . ! :", 0, (0, 0, 0))
+            text2 = font.render(": ! ! : ! . . : . ! . ! : ! : . Happy Birthday . : ! : ! . ! . : . . ! : ! ! :", 0, (0, 0, 0))
             text2_rect = text2.get_rect(center=(WIDTH // 2, HEIGHT - 300))
             message_window.blit(text2, text2_rect)
 
@@ -406,9 +415,17 @@ def display_message(message, clock):
 
             text4 = font.render("(  Hint: Play again  )", 0, (0, 0, 0))
             text4_rect = text4.get_rect(center=(WIDTH // 2, HEIGHT - 100))
-            message_window.blit(text4,text4_rect)
+            message_window.blit(text4, text4_rect)
+
+        # Rest of the code...
 
         pygame.display.update()
+
+        clock.tick(FPS)
+
+
+def replay_button():
+    pass
 
 
 def collide_rect(sprite1, sprite2):
