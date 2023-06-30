@@ -7,8 +7,7 @@ import os
 from os import listdir
 from os.path import isfile, join
 from pygame.mixer import*
-# from frog import *
-# from duck import *
+from pygame.locals import QUIT
 
 """
 WIDTH = 1000
@@ -342,6 +341,65 @@ def handle_move(player, objects):
     for obj in to_check:
         if obj and obj.name == "fire":
             player.make_hit()
+    for obj in objects:
+        if isinstance(obj, Fire) and collide_rect(player, obj):
+            if obj.rect.x == -830:
+                display_picture("assets/picture.png")
+            if obj.rect.x == 3775:
+                display_message(random.choice(["Happy Birthday!", "guess what...", "YES! get shimmied."]))
+
+
+def display_picture(image_path):
+    # Load the image
+    image = pygame.image.load(image_path)
+
+    # Create a new window to display the image
+    picture_window = pygame.display.set_mode((image.get_width(), image.get_height()))
+
+    # Display the image in the window
+    picture_window.blit(image, (0, 0))
+    pygame.display.flip()
+
+    # Wait for the window to be closed
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                quit()
+
+
+def display_message(message):
+    # Create a new window to display the message
+    message_window = pygame.display.set_mode((400, 200))
+
+    # Set the window title
+    pygame.display.set_caption("Collision Message")
+
+    # Render the message text
+    font = pygame.font.Font(None, 36)
+    text = font.render(message, True, (255, 255, 255))
+
+    # Center the text on the window
+    text_rect = text.get_rect(center=(200, 100))
+
+    # Fill the window with a background color
+    message_window.fill((0, 0, 0))
+
+    # Blit the text onto the window
+    message_window.blit(text, text_rect)
+
+    pygame.display.update()
+
+    # Wait for the window to be closed
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                quit()
+
+
+def collide_rect(sprite1, sprite2):
+    return sprite1.rect.colliderect(sprite2.rect)
 
 
 def main(window):
@@ -353,12 +411,16 @@ def main(window):
     # (...- block_size - "height", range of animation/sprite, bottom of object range)
     # Fire(x axis position,...)
     player = Player(210, HEIGHT - 50, 50, 50)
-    fire = Fire(-830, HEIGHT - block_size - 64, 15, 32)
+    fire = Fire(-530, HEIGHT - block_size - 64, 15, 32)
     fire.on()
     floor = [Block(i * block_size, HEIGHT - block_size, block_size)
              for i in range(-WIDTH*2 // block_size, (WIDTH * 4) // block_size)]
 
     objects = [*floor,
+               fire,
+               Fire(800, HEIGHT - block_size - 64, 15, 32),
+               Fire(2050, HEIGHT - block_size * 3 - 64, 15, 32),
+               Fire(3775, HEIGHT - block_size * 2 - 64, 15, 32),
                Block(block_size * -10, HEIGHT - block_size * 2, block_size),
                Block(block_size * -10, HEIGHT - block_size * 3, block_size),
                Block(block_size * -10, HEIGHT - block_size * 4, block_size),
@@ -384,10 +446,7 @@ def main(window):
                Block(block_size * 41, HEIGHT - block_size * 4, block_size),
                Block(block_size * 41, HEIGHT - block_size * 5, block_size),
                Block(block_size * 41, HEIGHT - block_size * 6, block_size),
-               fire,
-               Fire(800, HEIGHT - block_size - 64, 15, 32),
-               Fire(2050, HEIGHT - block_size * 3 - 64, 15, 32),
-               Fire(3775, HEIGHT - block_size * 2 - 64, 15, 32),
+
                ]
 
     offset_x = 0
@@ -397,7 +456,12 @@ def main(window):
     goofy_pic1 = pygame.image.load("assets/goofy_pic1.png")
     player_colliding = False
     message_window = pygame.display.set_mode((WIDTH, HEIGHT))
+    collision_timer = 0
+    message_displayed = False
+    messages = ["Happy Birthday!", "Guess what...", "YES! Get shimmied."]
+    message_start_timer = 0
 
+    paused = False
     run = True
     while run:
         clock.tick(FPS)
@@ -411,21 +475,16 @@ def main(window):
                 if event.key == pygame.K_SPACE and player.jump_count < 2:
                     player.jump()
 
-        # Check for collision between player and fire
         if player.rect.colliderect(fire.rect):
             # Show the message and set the flag to True
             if not player_colliding:
                 player_colliding = True
-                # Show the message when collision occurs
-                message_window.blit(goofy_pic1, (0, 0))
-                pygame.display.update()
-        else:
-            # Set the flag to False if not colliding
-            player_colliding = False
+                message_start_time = pygame.time.get_ticks()
+                message_window.blit(goofy_pic1, goofy_pic1.get_rect(center=(200, 20)))
 
-        if player_colliding:
-            message_window.blit(goofy_pic1, (0, 0))
-            pygame.display.update()
+            # Check if the message should stay on screen for 3 seconds
+        if player_colliding and pygame.time.get_ticks() - message_start_time >= 10000:
+            player_colliding = False
 
         player.loop(FPS)
         fire.loop()
@@ -435,6 +494,10 @@ def main(window):
         if ((player.rect.right - offset_x >= WIDTH - scroll_area_width) and player.x_vel > 0) or (
                 (player.rect.left - offset_x <= scroll_area_width) and player.x_vel < 0):
             offset_x += player.x_vel
+
+        if player_colliding:
+            message_window.blit(goofy_pic1, (0, 0))
+            pygame.display.update()
 
     pygame.quit()
     quit()
