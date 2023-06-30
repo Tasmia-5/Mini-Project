@@ -344,9 +344,11 @@ def handle_move(player, objects):
     for obj in objects:
         if isinstance(obj, Fire) and collide_rect(player, obj):
             if obj.rect.x == -830:
+                player.make_hit()
                 display_picture("assets/picture.png")
-            if obj.rect.x == 3775:
-                display_message(random.choice(["Happy Birthday!", "guess what...", "YES! get shimmied."]))
+            if obj.rect.x == 800:
+                player.make_hit()
+                display_message("guess what...\nHappy Birthday!\nBut there is more...\nFind the mystery chest!", clock)
 
 
 def display_picture(image_path):
@@ -368,34 +370,41 @@ def display_picture(image_path):
                 quit()
 
 
-def display_message(message):
+def display_message(message, clock):
+    pygame.init()
     # Create a new window to display the message
-    message_window = pygame.display.set_mode((400, 200))
+    message_window = pygame.display.set_mode((WIDTH, HEIGHT))
 
     # Set the window title
-    pygame.display.set_caption("Collision Message")
+    pygame.display.set_caption("Messages")
 
     # Render the message text
-    font = pygame.font.Font(None, 36)
-    text = font.render(message, True, (255, 255, 255))
+    # fonts: Nicotine.ttf , Jedisf3Dital.ttf, Alien Mushrooms.otf, Minecraft.ttf, YourStarTtf.ttf, nyetlaserital.otf
+    font = pygame.font.Font('Jedisf3Dital.ttf', 35)
 
-    # Center the text on the window
-    text_rect = text.get_rect(center=(200, 100))
-
-    # Fill the window with a background color
-    message_window.fill((0, 0, 0))
-
-    # Blit the text onto the window
-    message_window.blit(text, text_rect)
-
-    pygame.display.update()
-
-    # Wait for the window to be closed
     while True:
         for event in pygame.event.get():
-            if event.type == QUIT:
+            if event.type == pygame.QUIT:
                 pygame.quit()
-                quit()
+                sys.exit()
+
+        message_window.fill((229, 182, 247))  # Fill the window with lilac color
+
+        for i, message in enumerate(message):
+            # Convert the message to Unicode string
+            text = font.render("guess what... the moment of surprise...", 0, (0, 0, 0))
+            text_rect = text.get_rect(center=(WIDTH // 2, 100 + i * 50))
+            message_window.blit(text, text_rect)
+
+            text2 = font.render("Happy Birthday!    ^^", 0, (0, 0, 0))
+            text2_rect = text2.get_rect(center=(WIDTH // 2, HEIGHT - 300))
+            message_window.blit(text2, text2_rect)
+
+            text3 = font.render("But there is more... Find the mystery chest!", 0, (0, 0, 0))
+            text3_rect = text3.get_rect(center=(WIDTH // 2, HEIGHT - 200))
+            message_window.blit(text3, text3_rect)
+
+        pygame.display.update()
 
 
 def collide_rect(sprite1, sprite2):
@@ -415,7 +424,7 @@ def main(window):
     fire.on()
     floor = [Block(i * block_size, HEIGHT - block_size, block_size)
              for i in range(-WIDTH*2 // block_size, (WIDTH * 4) // block_size)]
-
+    # where the floor, grass blocks, and fire you want to place them
     objects = [*floor,
                fire,
                Fire(800, HEIGHT - block_size - 64, 15, 32),
@@ -456,12 +465,8 @@ def main(window):
     goofy_pic1 = pygame.image.load("assets/goofy_pic1.png")
     player_colliding = False
     message_window = pygame.display.set_mode((WIDTH, HEIGHT))
-    collision_timer = 0
-    message_displayed = False
-    messages = ["Happy Birthday!", "Guess what...", "YES! Get shimmied."]
-    message_start_timer = 0
+    message_start_time = 0
 
-    paused = False
     run = True
     while run:
         clock.tick(FPS)
@@ -504,4 +509,5 @@ def main(window):
 
 
 if __name__ == "__main__":
+    clock = pygame.time.Clock()
     main(window)
