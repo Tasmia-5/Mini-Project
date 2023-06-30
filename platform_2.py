@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import pygame
-import button
+import assets.Menu.Buttons.button as button
 import random
 import math
 import sys
