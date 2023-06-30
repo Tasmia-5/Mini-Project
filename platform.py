@@ -376,7 +376,7 @@ def display_message(message, clock):
     message_window = pygame.display.set_mode((WIDTH, HEIGHT))
 
     # Set the window title
-    pygame.display.set_caption("Messages")
+    pygame.display.set_caption("Special Message")
 
     # Render the message text
     # fonts: Nicotine.ttf , Jedisf3Dital.ttf, Alien Mushrooms.otf, Minecraft.ttf, YourStarTtf.ttf, nyetlaserital.otf
@@ -392,17 +392,21 @@ def display_message(message, clock):
 
         for i, message in enumerate(message):
             # Convert the message to Unicode string
-            text = font.render("guess what... the moment of surprise...", 0, (0, 0, 0))
-            text_rect = text.get_rect(center=(WIDTH // 2, 100 + i * 50))
+            text = font.render("guess what? The moment of surprise...", 0, (0, 0, 0))
+            text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT - 420))
             message_window.blit(text, text_rect)
 
-            text2 = font.render("Happy Birthday!    ^^", 0, (0, 0, 0))
+            text2 = font.render(": ! . . : . ! . ! : ! : . Happy Birthday . : ! : ! . ! . : . . ! :", 0, (0, 0, 0))
             text2_rect = text2.get_rect(center=(WIDTH // 2, HEIGHT - 300))
             message_window.blit(text2, text2_rect)
 
             text3 = font.render("But there is more... Find the mystery chest!", 0, (0, 0, 0))
-            text3_rect = text3.get_rect(center=(WIDTH // 2, HEIGHT - 200))
+            text3_rect = text3.get_rect(center=(WIDTH // 2, HEIGHT - 180))
             message_window.blit(text3, text3_rect)
+
+            text4 = font.render("(  Hint: Play again  )", 0, (0, 0, 0))
+            text4_rect = text4.get_rect(center=(WIDTH // 2, HEIGHT - 100))
+            message_window.blit(text4,text4_rect)
 
         pygame.display.update()
 
