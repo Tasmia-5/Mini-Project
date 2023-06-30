@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import pygame
 import random
 import math
@@ -5,8 +6,8 @@ import sys
 import os
 from os import listdir
 from os.path import isfile, join
-#from frog import *
-#from duck import *
+from pygame.mixer import*
+from pygame.locals import QUIT
 
 """
 WIDTH = 1000
@@ -104,16 +105,19 @@ def load_sprite_sheets(dir1, dir2, width, height, direction=False):
 
 
 def get_block(size):
+    pygame.init()
+    pygame.mixer.init()
+    pygame.mixer.music.load('sounds/FiftyFifty_Cupid.mp3')
+    music.play(-1)
     path = join("assets", "Terrain", "Terrain.png")
     image = pygame.image.load(path).convert_alpha()
     surface = pygame.Surface((size, size), pygame.SRCALPHA, 32)
-    rect = pygame.Rect(96, 128, size, size)
+    rect = pygame.Rect(96, 0, size, size)
     surface.blit(image, (0, 0), rect)
     return pygame.transform.scale2x(surface)
 
 
 class Player(pygame.sprite.Sprite):
-    COLOR = (255, 0, 0)
     GRAVITY = 1
     SPRITES = load_sprite_sheets("Characters", "Duck", 32, 32, True)
     ANIMATION_DELAY = 3
@@ -121,6 +125,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height):
         # vel(s) = how fast player goes
         super().__init__()
+        self.sprite = None
         self.rect = pygame.Rect(x, y, width, height)
         self.x_vel = 0
         self.y_vel = 0
@@ -235,9 +240,10 @@ class Fire(Object):
     ANIMATION_DELAY = 3
 
     def __init__(self, x, y, width, height):
+        # fire
         super().__init__(x, y, width, height, "fire")
         self.fire = load_sprite_sheets("Traps", "Fire", width, height)
-        self.image = self.fire["off"][0]
+        self.image = self.fire["on"][0]
         self.mask = pygame.mask.from_surface(self.image)
         self.animation_count = 0
         self.animation_name = "off"
@@ -335,6 +341,78 @@ def handle_move(player, objects):
     for obj in to_check:
         if obj and obj.name == "fire":
             player.make_hit()
+    for obj in objects:
+        if isinstance(obj, Fire) and collide_rect(player, obj):
+            if obj.rect.x == -830:
+                player.make_hit()
+                display_picture("assets/picture.png")
+            if obj.rect.x == 3775:
+                player.make_hit()
+                display_message("guess what...\nHappy Birthday!\nBut there is more...\nFind the mystery chest!", clock)
+
+
+def display_picture(image_path):
+    # Load the image
+    image = pygame.image.load(image_path)
+
+    # Create a new window to display the image
+    picture_window = pygame.display.set_mode((image.get_width(), image.get_height()))
+
+    # Display the image in the window
+    picture_window.blit(image, (0, 0))
+    pygame.display.flip()
+
+    # Wait for the window to be closed
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                quit()
+
+
+def display_message(message, clock):
+    pygame.init()
+    # Create a new window to display the message
+    message_window = pygame.display.set_mode((WIDTH, HEIGHT))
+
+    # Set the window title
+    pygame.display.set_caption("Special Message")
+
+    # Render the message text
+    # fonts: Nicotine.ttf , Jedisf3Dital.ttf, Alien Mushrooms.otf, Minecraft.ttf, YourStarTtf.ttf, nyetlaserital.otf
+    font = pygame.font.Font('Jedisf3Dital.ttf', 35)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        message_window.fill((229, 182, 247))  # Fill the window with lilac color
+
+        for i, message in enumerate(message):
+            # Convert the message to Unicode string
+            text = font.render("guess what? The moment of surprise...", 0, (0, 0, 0))
+            text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT - 420))
+            message_window.blit(text, text_rect)
+
+            text2 = font.render(": ! . . : . ! . ! : ! : . Happy Birthday . : ! : ! . ! . : . . ! :", 0, (0, 0, 0))
+            text2_rect = text2.get_rect(center=(WIDTH // 2, HEIGHT - 300))
+            message_window.blit(text2, text2_rect)
+
+            text3 = font.render("But there is more... Find the mystery chest!", 0, (0, 0, 0))
+            text3_rect = text3.get_rect(center=(WIDTH // 2, HEIGHT - 180))
+            message_window.blit(text3, text3_rect)
+
+            text4 = font.render("(  Hint: Play again  )", 0, (0, 0, 0))
+            text4_rect = text4.get_rect(center=(WIDTH // 2, HEIGHT - 100))
+            message_window.blit(text4,text4_rect)
+
+        pygame.display.update()
+
+
+def collide_rect(sprite1, sprite2):
+    return sprite1.rect.colliderect(sprite2.rect)
 
 
 def main(window):
@@ -342,17 +420,56 @@ def main(window):
     background, bg_image = get_background("Blue.png")
 
     block_size = 96
-
-    player = Player(100, 100, 50, 50)
-    fire = Fire(100, HEIGHT - block_size - 64, 16, 32)
+    # Player(x axis posit...)
+    # (...- block_size - "height", range of animation/sprite, bottom of object range)
+    # Fire(x axis position,...)
+    player = Player(210, HEIGHT - 50, 50, 50)
+    fire = Fire(-530, HEIGHT - block_size - 64, 15, 32)
     fire.on()
     floor = [Block(i * block_size, HEIGHT - block_size, block_size)
-             for i in range(-WIDTH // block_size, (WIDTH * 2) // block_size)]
-    objects = [*floor, Block(0, HEIGHT - block_size * 2, block_size),
-               Block(block_size * 3, HEIGHT - block_size * 4, block_size), fire]
+             for i in range(-WIDTH*2 // block_size, (WIDTH * 4) // block_size)]
+    # where the floor, grass blocks, and fire you want to place them
+    objects = [*floor,
+               fire,
+               Fire(800, HEIGHT - block_size - 64, 15, 32),
+               Fire(2050, HEIGHT - block_size * 3 - 64, 15, 32),
+               Fire(3775, HEIGHT - block_size * 2 - 64, 15, 32),
+               Block(block_size * -10, HEIGHT - block_size * 2, block_size),
+               Block(block_size * -10, HEIGHT - block_size * 3, block_size),
+               Block(block_size * -10, HEIGHT - block_size * 4, block_size),
+               Block(block_size * -10, HEIGHT - block_size * 5, block_size),
+               Block(block_size * -10, HEIGHT - block_size * 6, block_size),
+               Block(block_size * 5, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 6, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 6, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 10, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 11, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 19, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 20, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 21, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 22, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 23, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 39, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 40, HEIGHT - block_size * 1, block_size),
+               Block(block_size * 40, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 40, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 41, HEIGHT - block_size * 1, block_size),
+               Block(block_size * 41, HEIGHT - block_size * 2, block_size),
+               Block(block_size * 41, HEIGHT - block_size * 3, block_size),
+               Block(block_size * 41, HEIGHT - block_size * 4, block_size),
+               Block(block_size * 41, HEIGHT - block_size * 5, block_size),
+               Block(block_size * 41, HEIGHT - block_size * 6, block_size),
+
+               ]
 
     offset_x = 0
-    scroll_area_width = 200
+    # how far off to side you go
+    scroll_area_width = 400
+
+    goofy_pic1 = pygame.image.load("assets/goofy_pic1.png")
+    player_colliding = False
+    message_window = pygame.display.set_mode((WIDTH, HEIGHT))
+    message_start_time = 0
 
     run = True
     while run:
@@ -367,6 +484,17 @@ def main(window):
                 if event.key == pygame.K_SPACE and player.jump_count < 2:
                     player.jump()
 
+        if player.rect.colliderect(fire.rect):
+            # Show the message and set the flag to True
+            if not player_colliding:
+                player_colliding = True
+                message_start_time = pygame.time.get_ticks()
+                message_window.blit(goofy_pic1, goofy_pic1.get_rect(center=(200, 20)))
+
+            # Check if the message should stay on screen for 3 seconds
+        if player_colliding and pygame.time.get_ticks() - message_start_time >= 10000:
+            player_colliding = False
+
         player.loop(FPS)
         fire.loop()
         handle_move(player, objects)
@@ -376,10 +504,14 @@ def main(window):
                 (player.rect.left - offset_x <= scroll_area_width) and player.x_vel < 0):
             offset_x += player.x_vel
 
+        if player_colliding:
+            message_window.blit(goofy_pic1, (0, 0))
+            pygame.display.update()
+
     pygame.quit()
     quit()
 
 
 if __name__ == "__main__":
+    clock = pygame.time.Clock()
     main(window)
-
