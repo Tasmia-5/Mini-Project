@@ -346,7 +346,7 @@ def handle_move(player, objects):
             if obj.rect.x == -830:
                 player.make_hit()
                 display_picture("assets/picture.png")
-            if obj.rect.x == 800:
+            if obj.rect.x == 3775:
                 player.make_hit()
                 display_message("guess what...\nHappy Birthday!\nBut there is more...\nFind the mystery chest!", clock)
 
