@@ -147,7 +147,7 @@ def get_block(size):
     pygame.init()
     pygame.mixer.init()
     pygame.mixer.music.load('sounds/FiftyFifty_Cupid.mp3')
-    music.play(-1)
+    music.play(0)
     path = join("assets", "Terrain", "Terrain.png")
     image = pygame.image.load(path).convert_alpha()
     surface = pygame.Surface((size, size), pygame.SRCALPHA, 32)
@@ -158,7 +158,7 @@ def get_block(size):
 
 class Player(pygame.sprite.Sprite):
     GRAVITY = 1
-    SPRITES = load_sprite_sheets("Characters", "Duck", 32, 32, True)
+    SPRITES = load_sprite_sheets("Characters", "Frog", 32, 32, True)
     ANIMATION_DELAY = 3
 
     def __init__(self, x, y, width, height):
@@ -415,7 +415,7 @@ def display_message(message, clock):
     # pygame.mixer.music.load('sounds/Fireworks_pewpew.mp3')
     pygame.mixer.Channel(1).play(pygame.mixer.Sound('sounds/Happy_Bday.mp3'))
     pygame.mixer.Channel(2).play(pygame.mixer.Sound('sounds/Fireworks_pewpew.mp3'))
-    music.play(0)
+    music.play(0,0.0)
     # Create a new window to display the message
     message_window = pygame.display.set_mode((WIDTH, HEIGHT))
 
