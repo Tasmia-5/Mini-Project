@@ -1,3 +1,4 @@
+'''
 import pygame
 from support import import_folder
 # characters class
@@ -98,3 +99,4 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self, win, offset_x):
         win.blit(self.sprite, (self.rect.x - offset_x, self.rect.y))
+'''

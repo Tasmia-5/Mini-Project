@@ -6,7 +6,7 @@ this is a mini project about cute animals cute animals and adventures that is st
 
   - run to start
 
-- players.py = character change
+- the class Player in platform_1.py = character change
 
   - options:
 

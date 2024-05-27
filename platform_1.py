@@ -119,7 +119,7 @@ def get_block(size):
 
 class Player(pygame.sprite.Sprite):
     GRAVITY = 1
-    SPRITES = load_sprite_sheets("Characters", "Frog", 32, 32, True)
+    SPRITES = load_sprite_sheets("Characters", "Duck", 32, 32, True)
     ANIMATION_DELAY = 3
 
     def __init__(self, x, y, width, height):
@@ -483,7 +483,7 @@ def main(window):
     # how far off to side you go
     scroll_area_width = 400
 
-    goofy_pic1 = pygame.image.load("assets/goofy_pic1.png")
+    goofy_pic1 = pygame.image.load("assets/catkitty.png")
     player_colliding = False
     message_window = pygame.display.set_mode((WIDTH, HEIGHT))
     message_start_time = 0
